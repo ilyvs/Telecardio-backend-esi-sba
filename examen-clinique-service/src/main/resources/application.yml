@@ -4,7 +4,7 @@ healthcheck:
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/msdm?allowPublicKeyRetrieval=true&useSSL=false
+    url: jdbc:mysql://localhost:3306/examen-clinique?allowPublicKeyRetrieval=true&useSSL=false
 
     username: root
     password: Ilyas.00
@@ -16,4 +16,5 @@ spring:
     show-sql: true
     hibernate:
       ddl-auto: create-drop
-
+server:
+  port: 8081
