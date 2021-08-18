@@ -1,4 +1,4 @@
-package dz.esi.msem.model;
+package dz.esi.examenclinique.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -10,23 +10,18 @@ import javax.persistence.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-public class SigneVitaux {
+public class Pouls {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "idensv")
+    @Column(name = "idenpl")
     private Long id;
 
-    private String pressionArterielle;
+    private String poulsPeripheriques;
 
-    private String FrequenceEtRythmeCardiaques;
-
-    private String frequenceRespiratoire;
-
-    private int temperature;
-
-    private String spO2;
+    private String poulsCarotidiens;
 
     @Transient
     private ExamenClinique examenClinique;
+
 }

@@ -1,7 +1,7 @@
-package dz.esi.msem.dao;
+package dz.esi.examenclinique.dao;
 
 
-import dz.esi.msem.model.Abdominal;
+import dz.esi.examenclinique.model.Abdominal;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

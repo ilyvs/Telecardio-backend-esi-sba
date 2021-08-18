@@ -1,4 +1,4 @@
-package dz.esi.msem.model;
+package dz.esi.examenclinique.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

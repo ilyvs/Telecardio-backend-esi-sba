@@ -1,6 +1,6 @@
-package dz.esi.msem.dao;
+package dz.esi.examenclinique.dao;
 
-import dz.esi.msem.model.ExamenClinique;
+import dz.esi.examenclinique.model.ExamenClinique;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

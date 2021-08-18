@@ -1,7 +1,7 @@
-package dz.esi.msem.controller;
+package dz.esi.examenclinique.controller;
 
-import dz.esi.msem.model.ExamenClinique;
-import dz.esi.msem.service.ExamenMedicalService;
+import dz.esi.examenclinique.model.ExamenClinique;
+import dz.esi.examenclinique.service.ExamenMedicalService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,4 +1,4 @@
-package dz.esi.msem.model;
+package dz.esi.examenclinique.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -10,18 +10,17 @@ import javax.persistence.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-public class Pouls {
+public class Thorax {
 
-    @Id
+    @javax.persistence.Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "idenpl")
+    @Column(name = "identh")
     private Long id;
 
-    private String poulsPeripheriques;
+    private String inspection;
 
-    private String poulsCarotidiens;
+    private String palpation;
 
     @Transient
     private ExamenClinique examenClinique;
-
 }

@@ -1,7 +1,7 @@
-package dz.esi.msem.service;
+package dz.esi.examenclinique.service;
 
-import dz.esi.msem.dao.*;
-import dz.esi.msem.model.ExamenClinique;
+import dz.esi.examenclinique.dao.*;
+import dz.esi.examenclinique.model.ExamenClinique;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

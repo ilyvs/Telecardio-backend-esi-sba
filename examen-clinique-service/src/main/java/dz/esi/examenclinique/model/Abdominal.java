@@ -1,4 +1,4 @@
-package dz.esi.msem.model;
+package dz.esi.examenclinique.model;
 
 
 import lombok.AllArgsConstructor;
@@ -11,18 +11,14 @@ import javax.persistence.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-public class Poumons {
+public class Abdominal {
 
     @javax.persistence.Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "idenpo")
+    @Column(name = "idenab")
     private Long id;
 
-    private String percussion;
-
-    private String palpation;
-
-    private String auscultation;
+    private String abdominal;
 
     @Transient
     private ExamenClinique examenClinique;
