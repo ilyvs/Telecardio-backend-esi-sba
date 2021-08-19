@@ -1,5 +1,8 @@
 package dz.esi.gestioncompte.model;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.DynamicUpdate;
 import org.springframework.security.core.GrantedAuthority;
 
@@ -14,6 +17,9 @@ import java.util.Set;
 
 @Entity
 @DynamicUpdate
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 @Table(	name = "users", 
 		uniqueConstraints = { 
 			@UniqueConstraint(columnNames = "username"),
@@ -56,95 +62,10 @@ public class User {
 				inverseJoinColumns = @JoinColumn(name = "role_id"))
 	private Set<Role> roles = new HashSet<>();
 
-	public User() {
-	}
 
-	public User(String username, String email, Date dateN, String numTel, Long sin, String password, Sex sex ) {
-		this.username = username;
-		this.email = email;
-		this.dateN=dateN;
-		this.numTel=numTel;
-		this.sex=sex;
-		this.sin=sin;
-		this.password = password;
-
-
-	}
-
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	public String getUsername() {
-		return username;
-	}
-
-
-
-
-	public void setUsername(String username) {
-		this.username = username;
-	}
-
-	public String getEmail() {
-		return email;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
-	}
 
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		return null;
 	}
 
-	public String getPassword() {
-		return password;
-	}
-
-	public void setPassword(String password) {
-		this.password = password;
-	}
-
-
-	public Date getDateN() {
-		return dateN;
-	}
-
-	public void setDateN(Date dateN) {
-		this.dateN = dateN;
-	}
-
-
-	public String getNumTel(){ return numTel;}
-	public void setNumTel(String numTel){this.numTel=numTel;}
-
-	public Sex getSex(){ return sex;}
-	public void setSex(Sex sex){this.sex=sex;}
-
-	public Long getSin(){ return sin;}
-	public void setSin(Long sin){this.sin=sin;}
-
-	public String getVerificationCode(){return verificationCode;}
-	public void setVerificationCode(String verificationCode){this.verificationCode=verificationCode;}
-
-	public boolean isEnabled() {
-		return enabled;
-	}
-
-	public void setEnabled(boolean enabled) {
-		this.enabled = enabled;
-	}
-
-	public Set<Role> getRoles() {
-		return roles;
-	}
-
-	public void setRoles(Set<Role> roles) {
-		this.roles = roles;
-	}
 }

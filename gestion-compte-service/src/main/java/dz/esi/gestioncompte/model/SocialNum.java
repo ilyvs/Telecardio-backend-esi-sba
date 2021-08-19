@@ -1,8 +1,15 @@
 package dz.esi.gestioncompte.model;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import javax.persistence.*;
 
 @Entity
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 @Table(	name = "SocialNum",
         uniqueConstraints = {
                 @UniqueConstraint(columnNames = "id"),
@@ -16,18 +23,5 @@ public class SocialNum {
 
     private Long sin;
 
-    public SocialNum() {
 
-    }
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public Long getSin(){return sin;}
-
-    public void setSin(Long sin){ this.sin=sin; }
 }
