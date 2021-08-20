@@ -23,6 +23,12 @@ spring:
             - RewritePath=/examen-clinique-service/(?<s>.*), /${s}
           uri: lb://examen-clinique-service
 
+        - id: gestion-compte-service
+          predicates:
+            - Path=/gestion-compte-service/**
+          filters:
+            - RewritePath=/gestion-compte-service/(?<s>.*), /${s}
+          uri: lb://gestion-compte-service
 
 eureka:
   client:

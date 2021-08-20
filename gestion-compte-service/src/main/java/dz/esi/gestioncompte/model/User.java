@@ -71,8 +71,6 @@ public class User {
 		this.sex=sex;
 		this.sin=sin;
 		this.password = password;
-
-
 	}
 
 }

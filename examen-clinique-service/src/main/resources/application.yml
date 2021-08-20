@@ -10,6 +10,11 @@ spring:
   application:
     name: examen-clinique-service
 
+  cloud:
+    config:
+      enabled: false
+
+
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://localhost:3306/examen-clinique?allowPublicKeyRetrieval=true&useSSL=false
