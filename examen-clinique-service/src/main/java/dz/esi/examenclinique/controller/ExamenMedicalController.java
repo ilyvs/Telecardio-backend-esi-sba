@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 @CrossOrigin(origins = "*")
 @RestController
-@RequestMapping("/api/v1/msem/service")
+@RequestMapping("")
 public class ExamenMedicalController {
 
     Logger logger = LoggerFactory.getLogger(ExamenMedicalController.class);
