@@ -9,7 +9,7 @@ import java.util.Date;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class InformationPersonnelle {
+public class DynamicInformationPersonnelle {
 
     private Long userId;
     private String nom;

@@ -1,6 +1,9 @@
 package dz.esi.dossiermedical.controller;
 
+import dz.esi.dossiermedical.DTO.DynamicInformationPersonnelle;
 import dz.esi.dossiermedical.model.InformationPersonnelle;
+import dz.esi.dossiermedical.proxy.InformationPersonnelleProxy;
+import dz.esi.dossiermedical.proxy.LoginRequest;
 import dz.esi.dossiermedical.service.DossierMedicalService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,9 +22,18 @@ public class DossierMedicalController {
     @Autowired
     private DossierMedicalService dossierMedicalService;
 
+    @Autowired
+    InformationPersonnelleProxy informationPersonnelleProxy;
+
     @PostMapping(value = "/ajouter-dossier-medical", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> ajouterDossierMedical(@RequestBody final InformationPersonnelle Data) {
         return dossierMedicalService.ajouterDossierMedical(Data);
+    }
+
+    @GetMapping(value = "/test", produces = MediaType.APPLICATION_JSON_VALUE)
+    public DynamicInformationPersonnelle test() {
+        LoginRequest loginRequest = new LoginRequest("ilyas", "ramy1234");
+        return informationPersonnelleProxy.getInformationPersonnelle(loginRequest);
     }
 
     @GetMapping("/afficher-dossier-medical/{id}")

@@ -1,4 +1,4 @@
-package dz.esi.gestioncompte.payload.request;
+package dz.esi.dossiermedical.proxy;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
