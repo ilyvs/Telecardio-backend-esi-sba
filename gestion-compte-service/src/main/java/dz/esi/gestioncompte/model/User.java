@@ -20,11 +20,7 @@ import java.util.Set;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(	name = "users", 
-		uniqueConstraints = { 
-			@UniqueConstraint(columnNames = "username"),
-			@UniqueConstraint(columnNames = "email") 
-		})
+@Table(uniqueConstraints = {@UniqueConstraint(columnNames = "username"), @UniqueConstraint(columnNames = "email") })
 public class User {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -51,7 +47,7 @@ public class User {
 
 	private Long sin;
 
-	@Column(name = "verification_code", length = 64)
+	@Column(length = 64)
 	private String verificationCode;
 
 	private boolean enabled;
@@ -62,10 +58,21 @@ public class User {
 				inverseJoinColumns = @JoinColumn(name = "role_id"))
 	private Set<Role> roles = new HashSet<>();
 
-
-
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		return null;
+	}
+
+
+	public User(String username, String email, Date dateN, String numTel, Long sin, String password, Sex sex ) {
+		this.username = username;
+		this.email = email;
+		this.dateN=dateN;
+		this.numTel=numTel;
+		this.sex=sex;
+		this.sin=sin;
+		this.password = password;
+
+
 	}
 
 }

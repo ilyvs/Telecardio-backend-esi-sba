@@ -10,13 +10,10 @@ import javax.persistence.*;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(	name = "SocialNum",
-        uniqueConstraints = {
-                @UniqueConstraint(columnNames = "id"),
-                @UniqueConstraint(columnNames = "sin")
-        })
+@Table(uniqueConstraints = { @UniqueConstraint(columnNames = "id"), @UniqueConstraint(columnNames = "sin") })
 
 public class SocialNum {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
