@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 @FeignClient(name="gestion-compte-service")
 @LoadBalancerClient(name="gestion-compte-service",configuration = LBConfiguration.class)
-public interface UserProxy {
+public interface InformationPersonnelleProxy {
 
     @GetMapping("/**/{id}")
     User getUserInformation(@PathVariable("id") Long idD);

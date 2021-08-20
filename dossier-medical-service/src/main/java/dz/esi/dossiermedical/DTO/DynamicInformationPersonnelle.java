@@ -9,7 +9,7 @@ import java.util.Date;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class User {
+public class InformationPersonnelle {
 
     private Long userId;
     private String nom;
