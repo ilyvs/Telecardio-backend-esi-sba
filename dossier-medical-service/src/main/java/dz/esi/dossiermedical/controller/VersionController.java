@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @CrossOrigin(origins = "*")
 @RestController
-@RequestMapping("/api/v1/msdm/service")
+@RequestMapping("")
 public class VersionController {
 
     @Value("${healthcheck.version}")
