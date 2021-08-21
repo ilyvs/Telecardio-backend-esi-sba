@@ -1,3 +1,7 @@
+healthcheck:
+  version : version 1 . 0
+
+
 server:
   port: 8083
 
@@ -12,7 +16,7 @@ spring:
 
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/authbase1?allowPublicKeyRetrieval=true&useSSL=false
+    url: jdbc:mysql://localhost:3306/gestion-compte?allowPublicKeyRetrieval=true&useSSL=false
     username: root
     password: Ilyas.00
     hikari:
@@ -23,7 +27,7 @@ spring:
     generate-ddl: true
     show-sql: true
     hibernate:
-      ddl-auto: create-drop
+      ddl-auto: update
 
 
 eureka:
