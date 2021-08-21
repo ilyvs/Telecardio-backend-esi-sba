@@ -1,9 +1,7 @@
 package dz.esi.dossiermedical.controller;
 
-import dz.esi.dossiermedical.DTO.DynamicInformationPersonnelle;
 import dz.esi.dossiermedical.model.InformationPersonnelle;
-import dz.esi.dossiermedical.proxy.InformationPersonnelleProxy;
-import dz.esi.dossiermedical.proxy.LoginRequest;
+import dz.esi.dossiermedical.model.PatientDossier;
 import dz.esi.dossiermedical.service.DossierMedicalService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,24 +15,16 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("")
 public class DossierMedicalController {
 
-    Logger logger = LoggerFactory.getLogger(DossierMedicalController.class);
 
     @Autowired
     private DossierMedicalService dossierMedicalService;
 
-    @Autowired
-    InformationPersonnelleProxy informationPersonnelleProxy;
 
-    @PostMapping(value = "/ajouter-dossier-medical", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> ajouterDossierMedical(@RequestBody final InformationPersonnelle Data) {
+    @PostMapping(value = "/ajouter-dossier-medical")
+    public ResponseEntity<?> ajouterDossierMedical(@RequestBody final PatientDossier Data) {
         return dossierMedicalService.ajouterDossierMedical(Data);
     }
 
-    @GetMapping(value = "/test", produces = MediaType.APPLICATION_JSON_VALUE)
-    public DynamicInformationPersonnelle test() {
-        LoginRequest loginRequest = new LoginRequest("ilyas", "ramy1234");
-        return informationPersonnelleProxy.getInformationPersonnelle(loginRequest);
-    }
 
     @GetMapping("/afficher-dossier-medical/{id}")
     public InformationPersonnelle afficherDossierMedical(@PathVariable Long id) {
@@ -42,7 +32,7 @@ public class DossierMedicalController {
     }
 
     @PutMapping("/modifier-dossier-medical/{id}")
-    public ResponseEntity<?> modifierDossierMedical(@RequestBody final InformationPersonnelle newData,
+    public ResponseEntity<?> modifierDossierMedical(@RequestBody final PatientDossier newData,
                                                     @PathVariable Long id ) {
         return dossierMedicalService.modifierDossierMedical(newData, id);
     }

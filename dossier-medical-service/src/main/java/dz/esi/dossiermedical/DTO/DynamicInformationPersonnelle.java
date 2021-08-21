@@ -19,5 +19,8 @@ public class DynamicInformationPersonnelle {
     private String gendre;
     private String adresse;
     private String email;
-
+    private String numTelephone;
+    private String activiteProf;
+    private String numeroSecuriteSocial;
+    private String groupeSanguin;
 }

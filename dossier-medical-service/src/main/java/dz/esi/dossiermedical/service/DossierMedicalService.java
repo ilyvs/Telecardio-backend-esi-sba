@@ -1,8 +1,11 @@
 package dz.esi.dossiermedical.service;
 
+import dz.esi.dossiermedical.DTO.DynamicInformationPersonnelle;
 import dz.esi.dossiermedical.dao.*;
 import dz.esi.dossiermedical.model.InformationPersonnelle;
-import dz.esi.dossiermedical.model.PieceJoint;
+import dz.esi.dossiermedical.model.PatientDossier;
+import dz.esi.dossiermedical.proxy.InformationPersonnelleProxy;
+import dz.esi.dossiermedical.proxy.LoginRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -29,23 +32,43 @@ public class DossierMedicalService {
     private SigneCardiaqueRepository signeCardiaqueRepo;
 
     @Autowired
-    private PieceJointRepository pieceJointRepo;
+    InformationPersonnelleProxy informationPersonnelleProxy;
 
+    @Autowired
+    PatientDossierRepository patientDossierRepo;
 
     @ResponseBody
-    public ResponseEntity<?> ajouterDossierMedical(InformationPersonnelle Data) {
+    public ResponseEntity<?> ajouterDossierMedical(PatientDossier Data) {
+
+        LoginRequest loginRequest = new LoginRequest("ilyas", "ramy1234");
+        DynamicInformationPersonnelle dynamicInformationPersonnelle = informationPersonnelleProxy.getInformationPersonnelle(loginRequest);
+
+        InformationPersonnelle informationPersonnelle = new InformationPersonnelle(
+                dynamicInformationPersonnelle.getNom(),
+                dynamicInformationPersonnelle.getPrenom(),
+                dynamicInformationPersonnelle.getDateNaissance(),
+                dynamicInformationPersonnelle.getLieuNaissance(),
+                dynamicInformationPersonnelle.getGendre(),
+                dynamicInformationPersonnelle.getAdresse(),
+                dynamicInformationPersonnelle.getEmail(),
+                dynamicInformationPersonnelle.getNumTelephone(),
+                dynamicInformationPersonnelle.getActiviteProf(),
+                dynamicInformationPersonnelle.getGroupeSanguin(),
+                dynamicInformationPersonnelle.getNumeroSecuriteSocial()
+        );
+        informationPersonnelleRepo.save(informationPersonnelle);
 
         Data.getInformationBiometrique().setImc(Data.getInformationBiometrique().getPoids()/Math.sqrt(Data.getInformationBiometrique().getTaille()));
         biometriqueRepo.save(Data.getInformationBiometrique());
-        antecedentPersonnelleRepo.save(Data.getAntecedentPersonnelle());
-        signeCardiaqueRepo.save(Data.getSigneCardiaque());
-        antecedentMedicoCherigicauxRepo.save(Data.getAntecedentMedicoCherigicaux());
-        informationPersonnelleRepo.save(Data);
 
-        for (PieceJoint pieceJoint: Data.getPieceJointList()) {
-            pieceJoint.setInfoPer(Data);
-            pieceJointRepo.save(pieceJoint);
-        }
+        antecedentPersonnelleRepo.save(Data.getAntecedentPersonnelle());
+
+        signeCardiaqueRepo.save(Data.getSigneCardiaque());
+
+        antecedentMedicoCherigicauxRepo.save(Data.getAntecedentMedicoCherigicaux());
+
+        patientDossierRepo.save(Data);
+
 
         return new ResponseEntity<>("Dossier médical ajouté avec succès", HttpStatus.OK);
     }
@@ -53,15 +76,17 @@ public class DossierMedicalService {
 
     public InformationPersonnelle afficherDossierMedical(@PathVariable Long id) {
         InformationPersonnelle infPer = informationPersonnelleRepo.findById(id).orElseThrow (null);
-        if ( infPer!=null ) for (PieceJoint pieceJoint : infPer.getPieceJointList()) pieceJoint.setInfoPer(null);
         return infPer;
     }
 
     @ResponseBody
-    public ResponseEntity<?> modifierDossierMedical(InformationPersonnelle newData, Long id) {
+    public ResponseEntity<?> modifierDossierMedical(PatientDossier newData, Long id) {
 
-        if (informationPersonnelleRepo.getById(id) != null) {
+        if (patientDossierRepo.getById(id) != null) {
             newData.setId(id);
+
+            newData.getInformationPersonnelle().setId(newData.getInformationPersonnelle().getId());
+            informationPersonnelleRepo.save(newData.getInformationPersonnelle());
 
             newData.getInformationBiometrique().setImc(newData.getInformationBiometrique().getPoids()/Math.sqrt(newData.getInformationBiometrique().getTaille()));
             newData.getInformationBiometrique().setId(newData.getInformationBiometrique().getId());
@@ -76,15 +101,11 @@ public class DossierMedicalService {
             newData.getSigneCardiaque().setId(newData.getSigneCardiaque().getId());
             signeCardiaqueRepo.save(newData.getSigneCardiaque());
 
-            informationPersonnelleRepo.save(newData);
-            for (PieceJoint pieceJoint: newData.getPieceJointList()) {
-                pieceJoint.setId(pieceJoint.getId());
-                pieceJoint.setInfoPer(newData);
-                pieceJointRepo.save(pieceJoint);
-            }
+            patientDossierRepo.save(newData);
 
         }
         return new ResponseEntity<>("Dossier médical modifié avec succès", HttpStatus.OK);
+
     }
 
 
