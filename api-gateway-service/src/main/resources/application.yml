@@ -15,7 +15,7 @@ spring:
           filters:
             - RewritePath=/dossier-medical-service/(?<s>.*), /${s}
             - name: CircuitBreaker
-                args:
+              args:
                   name: fallback-dossier-medical-service
                   fallbackuri: forward:/dossierMedicalServiceDefaultResponse
           uri: lb://dossier-medical-service
@@ -26,7 +26,7 @@ spring:
           filters:
             - RewritePath=/examen-clinique-service/(?<s>.*), /${s}
             - name: CircuitBreaker
-                args:
+              args:
                   name: fallback-examen-clinique-service
                   fallbackuri: forward:/examenCliniqueServiceDefaultResponse
           uri: lb://examen-clinique-service
@@ -37,7 +37,7 @@ spring:
           filters:
             - RewritePath=/gestion-compte-service/(?<s>.*), /${s}
             - name: CircuitBreaker
-                  args:
+              args:
                     name: fallback-gestion-compte-service
                     fallbackuri: forward:/gestionCompteServiceDefaultResponse
           uri: lb://gestion-compte-service
