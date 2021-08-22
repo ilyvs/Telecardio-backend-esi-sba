@@ -26,28 +26,32 @@ public class User {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	@Size(max = 20)
-	private String username;
+	private String nom;
 
-	@Size(max = 50)
-	@Email
-	private String email;
+	private String prenom;
 
-	@Size(max = 120)
-	private String password;
-    
 	@Temporal(TemporalType.DATE)
-	private Date dateN;
-	private String numTel;
+	private Date dateNaissance;
 
-	@Column
-	@NotNull
+	private String lieuNaissance;
+
 	@Enumerated(EnumType.STRING)
 	private Sex sex;
 
-	private Long sin;
+	private String adresse;
 
-	@Column(length = 64)
+	private String email;
+
+	private String numTelephone;
+
+	private String activiteProf;
+
+	private Long numeroSecuriteSocial;
+
+	private String groupeSanguin;
+
+	private String password;
+
 	private String verificationCode;
 
 	private boolean enabled;
@@ -62,15 +66,24 @@ public class User {
 		return null;
 	}
 
+	public User(String nom, String prenom, Date dateNaissance, String lieuNaissance, Sex sex,
+				String adresse, String email, String numTelephone, String activiteProf,
+				Long numeroSecuriteSocial, String groupeSanguin, String password) {
 
-	public User(String username, String email, Date dateN, String numTel, Long sin, String password, Sex sex ) {
-		this.username = username;
+		this.nom = nom;
+		this.prenom = prenom;
+		this.dateNaissance = dateNaissance;
+		this.lieuNaissance = lieuNaissance;
+		this.sex = sex;
+		this.adresse = adresse;
 		this.email = email;
-		this.dateN=dateN;
-		this.numTel=numTel;
-		this.sex=sex;
-		this.sin=sin;
+		this.numTelephone = numTelephone;
+		this.activiteProf = activiteProf;
+		this.numeroSecuriteSocial = numeroSecuriteSocial;
+		this.groupeSanguin = groupeSanguin;
 		this.password = password;
 	}
+
+
 
 }

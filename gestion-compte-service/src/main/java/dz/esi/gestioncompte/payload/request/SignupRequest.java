@@ -21,27 +21,43 @@ public class SignupRequest {
 
     @NotBlank
     @Size(min = 3, max = 20)
-    private String username;
+    private String nom;
+
+    @NotBlank
+    @Size(min = 3, max = 20)
+    private String prenom;
+
+    @Temporal(TemporalType.DATE)
+    private Date dateNaissance;
+
+    @NotBlank
+    private String lieuNaissance;
 
     @NotBlank
     @Size(max = 50)
     @Email
     private String email;
 
-    @NotBlank
-    @Size(min = 6, max = 40)
-    private String password;
-    @Temporal(TemporalType.DATE)
-    private Date dateN;
-    @NotNull
-    private String numTel;
-
     @Column
     @NotNull
     @Enumerated(EnumType.STRING)
     private Sex sex;
+
+    private String adresse;
+
+
+    private String numTelephone;
+
+    private String activiteProf;
+
     @NotNull
-    private Long sin;
+    private Long numeroSecuriteSocial;
+
+    private String groupeSanguin;
+
+    @NotBlank
+    @Size(min = 6, max = 40)
+    private String password;
 
     private Set<String> role;
 

@@ -85,16 +85,7 @@ public class AuthController {
 												 userDetails.getEmail(),
 											     roles));
 
-/**
-		 }
-        else return ResponseEntity
-				.badRequest()
-				.body(new MessageResponse("Error: please verify your mail"));
-**/
-
 	}
-
-
 
 
 
@@ -102,24 +93,19 @@ public class AuthController {
 	public ResponseEntity<MessageResponse> registerUser(@Valid @RequestBody SignupRequest signUpRequest, HttpServletRequest request)
 			throws UnsupportedEncodingException, MessagingException {
 
-		if (userRepository.existsByUsername(signUpRequest.getUsername())) {
-			return ResponseEntity
-					.badRequest()
-					.body(new MessageResponse("Error: Username is already exist!"));
-		}
 
 		if (userRepository.existsByEmail(signUpRequest.getEmail())) {
 			return ResponseEntity
 					.badRequest()
 					.body(new MessageResponse("Error: Email is already in use!"));
 		}
-		if (userRepository.existsBySin(signUpRequest.getSin())){
+		if (userRepository.existsBySin(signUpRequest.getNumeroSecuriteSocial())){
 			return ResponseEntity
 					.badRequest()
 					.body((new MessageResponse("Error: Sin is already in use")));
 		}
 
-		if (socialNumRepository.existsBySin(signUpRequest.getSin())) {
+		if (socialNumRepository.existsBySin(signUpRequest.getNumeroSecuriteSocial())) {
 
 		}else {
 			return ResponseEntity
@@ -129,13 +115,19 @@ public class AuthController {
 
 
 		// Create new user's account
-		User user = new User(signUpRequest.getUsername(),
-									 signUpRequest.getEmail(),
-									 signUpRequest.getDateN(),
-									 signUpRequest.getNumTel(),
-				signUpRequest.getSin(),
-				encoder.encode(signUpRequest.getPassword()),
-				signUpRequest.getSex());
+		User user = new User(signUpRequest.getNom(),
+				signUpRequest.getPrenom(),
+				signUpRequest.getDateNaissance(),
+				signUpRequest.getLieuNaissance(),
+				signUpRequest.getEmail(),
+				signUpRequest.getSex(),
+				signUpRequest.getAdresse(),
+				signUpRequest.getNumTelephone(),
+				signUpRequest.getActiviteProf(),
+				signUpRequest.getNumeroSecuriteSocial(),
+				signUpRequest.getGroupeSanguin(),
+				encoder.encode(signUpRequest.getPassword())
+		);
 
 
 		Set<String> strRoles = signUpRequest.getRole();
@@ -200,17 +192,20 @@ public class AuthController {
 
 
 	@PutMapping("/update/{id}")
-	public String updateUser(@PathVariable("id") long id, String username, String email , Date dateN, String numTel, String password,Long sin)
+	public String updateUser(@PathVariable("id") long id, Date dateNaissance, String lieuNaissance,
+							 String nom, String prenom, String email , String adresse, String numTelephone,
+							 String password)
 	{
 		try {
 			User user = userRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid user Id:" + id));
-			user.setUsername(username);
-
+			user.setNom(nom);
+			user.setPrenom(prenom);
+			user.setDateNaissance(dateNaissance);
+			user.setLieuNaissance(lieuNaissance);
 			user.setEmail(email);
-			user.setDateN(dateN);
-			user.setNumTel(numTel);
+			user.setAdresse(adresse);
+			user.setNumTelephone(numTelephone);
 			user.setPassword(password);
-			user.setSin(sin);
 
 			userRepository.save(user);
 		}

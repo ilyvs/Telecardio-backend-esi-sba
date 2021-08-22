@@ -50,6 +50,7 @@ public class ExamenMedicalService {
 
 
     public ExamenClinique afficherExamenMedical( Long id) {
+
         return examenCliniqueRepo.findById(id).orElse(null);
     }
 
