@@ -2,9 +2,11 @@ package dz.esi.dossiermedical.controller;
 
 import dz.esi.dossiermedical.model.InformationPersonnelle;
 import dz.esi.dossiermedical.model.PatientDossier;
+import dz.esi.dossiermedical.proxy.LoginRequest;
 import dz.esi.dossiermedical.proxy.MsRequest;
 import dz.esi.dossiermedical.service.DossierMedicalService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 

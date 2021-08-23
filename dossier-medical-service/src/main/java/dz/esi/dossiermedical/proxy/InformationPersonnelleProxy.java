@@ -9,7 +9,8 @@ import org.springframework.web.bind.annotation.*;
 @LoadBalancerClient(name="gestion-compte-service",configuration = LBConfiguration.class)
 public interface InformationPersonnelleProxy {
 
-    @PostMapping("/getInformationPersonnelle")
+    @PostMapping("/api/auth/get-information-personnelle")
     DynamicInformationPersonnelle getInformationPersonnelle(@RequestBody MsRequest msRequest);
+
 
 }

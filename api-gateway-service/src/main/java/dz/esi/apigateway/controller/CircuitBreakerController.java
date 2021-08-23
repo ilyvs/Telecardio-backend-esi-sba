@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class CircuitBreakerController {
 
-    @GetMapping("/dossierMedicalServiceDefaultResponse")
+  /*  @GetMapping("/dossierMedicalServiceDefaultResponse")
     public String dossierMedicalServiceFallBack() {
         return " Dossier Medical Service Goes Down";
     }
@@ -18,7 +18,7 @@ public class CircuitBreakerController {
         return " Dossier Medical Service Goes Down";
     }
 
-
+*/
 
     @GetMapping("/examenCliniqueServiceDefaultResponse")
     public String examenCliniqueServiceFallBack() {
@@ -37,9 +37,10 @@ public class CircuitBreakerController {
         return "Gestion Compte Service Goes Down";
     }
 
+    /**
     @PostMapping("/gestionCompteServiceDefaultResponse")
     public String gestionCompteServiceFallBackPost() {
         return "Gestion Compte Service Goes Down";
     }
-
+    */
 }

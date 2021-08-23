@@ -5,6 +5,7 @@ import dz.esi.dossiermedical.dao.*;
 import dz.esi.dossiermedical.model.InformationPersonnelle;
 import dz.esi.dossiermedical.model.PatientDossier;
 import dz.esi.dossiermedical.proxy.InformationPersonnelleProxy;
+import dz.esi.dossiermedical.proxy.LoginRequest;
 import dz.esi.dossiermedical.proxy.MsRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -38,7 +39,6 @@ public class DossierMedicalService {
     @Autowired
     PatientDossierRepository patientDossierRepo;
 
-    @ResponseBody
     public InformationPersonnelle getInformationPersonnelle(MsRequest msRequest) {
         DynamicInformationPersonnelle dynamicInformationPersonnelle = informationPersonnelleProxy.getInformationPersonnelle(msRequest);
 
@@ -59,9 +59,30 @@ public class DossierMedicalService {
         return informationPersonnelle;
     }
 
+    /** public InformationPersonnelle getInformationPersonnelle2(LoginRequest loginRequest) {
+
+        DynamicInformationPersonnelle dynamicInformationPersonnelle = informationPersonnelleProxy.getInformationPersonnelle2(loginRequest);
+
+        InformationPersonnelle informationPersonnelle = new InformationPersonnelle(
+                dynamicInformationPersonnelle.getNom(),
+                dynamicInformationPersonnelle.getPrenom(),
+                dynamicInformationPersonnelle.getDateNaissance(),
+                dynamicInformationPersonnelle.getLieuNaissance(),
+                dynamicInformationPersonnelle.getSex(),
+                dynamicInformationPersonnelle.getEmail(),
+                dynamicInformationPersonnelle.getNumTelephone(),
+                dynamicInformationPersonnelle.getActiviteProf(),
+                dynamicInformationPersonnelle.getNumeroSecuriteSocial(),
+                dynamicInformationPersonnelle.getGroupeSanguin()
+        );
+        informationPersonnelleRepo.save(informationPersonnelle);
+
+        return informationPersonnelle;
+    }
+    */
 
 
-    @ResponseBody
+
     public ResponseEntity<?> ajouterDossierMedical(PatientDossier Data) {
 
         Data.getInformationPersonnelle().setId(Data.getInformationPersonnelle().getId());
