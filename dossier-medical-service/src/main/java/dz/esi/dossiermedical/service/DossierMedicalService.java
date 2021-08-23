@@ -5,12 +5,13 @@ import dz.esi.dossiermedical.dao.*;
 import dz.esi.dossiermedical.model.InformationPersonnelle;
 import dz.esi.dossiermedical.model.PatientDossier;
 import dz.esi.dossiermedical.proxy.InformationPersonnelleProxy;
-import dz.esi.dossiermedical.proxy.LoginRequest;
+import dz.esi.dossiermedical.proxy.MsRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 @Service
@@ -38,10 +39,8 @@ public class DossierMedicalService {
     PatientDossierRepository patientDossierRepo;
 
     @ResponseBody
-    public ResponseEntity<?> ajouterDossierMedical(PatientDossier Data) {
-
-        LoginRequest loginRequest = new LoginRequest("ilyas", "ramy1234");
-        DynamicInformationPersonnelle dynamicInformationPersonnelle = informationPersonnelleProxy.getInformationPersonnelle(loginRequest);
+    public InformationPersonnelle getInformationPersonnelle(MsRequest msRequest) {
+        DynamicInformationPersonnelle dynamicInformationPersonnelle = informationPersonnelleProxy.getInformationPersonnelle(msRequest);
 
         InformationPersonnelle informationPersonnelle = new InformationPersonnelle(
                 dynamicInformationPersonnelle.getNom(),
@@ -54,8 +53,20 @@ public class DossierMedicalService {
                 dynamicInformationPersonnelle.getActiviteProf(),
                 dynamicInformationPersonnelle.getNumeroSecuriteSocial(),
                 dynamicInformationPersonnelle.getGroupeSanguin()
-                );
+        );
         informationPersonnelleRepo.save(informationPersonnelle);
+
+        return informationPersonnelle;
+    }
+
+
+
+    @ResponseBody
+    public ResponseEntity<?> ajouterDossierMedical(PatientDossier Data) {
+
+        Data.getInformationPersonnelle().setId(Data.getInformationPersonnelle().getId());
+        informationPersonnelleRepo.save(Data.getInformationPersonnelle());
+
 
         Data.getInformationBiometrique().setImc(Data.getInformationBiometrique().getPoids()/Math.sqrt(Data.getInformationBiometrique().getTaille()));
         biometriqueRepo.save(Data.getInformationBiometrique());

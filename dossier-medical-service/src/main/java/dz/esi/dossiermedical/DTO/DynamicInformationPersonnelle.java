@@ -11,6 +11,7 @@ import java.util.Date;
 @NoArgsConstructor
 public class DynamicInformationPersonnelle {
 
+
     private Long id;
     private String nom;
     private String prenom;
@@ -22,4 +23,5 @@ public class DynamicInformationPersonnelle {
     private String activiteProf;
     private Long numeroSecuriteSocial;
     private String groupeSanguin;
+
 }
