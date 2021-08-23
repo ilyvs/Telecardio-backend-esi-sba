@@ -7,9 +7,7 @@ import org.hibernate.annotations.DynamicUpdate;
 import org.springframework.security.core.GrantedAuthority;
 
 import javax.persistence.*;
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
+
 import java.util.Collection;
 import java.util.Date;
 import java.util.HashSet;
@@ -26,6 +24,8 @@ public class User {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
+	private String username;
+
 	private String nom;
 
 	private String prenom;
@@ -35,12 +35,10 @@ public class User {
 
 	private String lieuNaissance;
 
+	private String email;
+
 	@Enumerated(EnumType.STRING)
 	private Sex sex;
-
-	private String adresse;
-
-	private String email;
 
 	private String numTelephone;
 
@@ -66,16 +64,16 @@ public class User {
 		return null;
 	}
 
-	public User(String nom, String prenom, Date dateNaissance, String lieuNaissance, Sex sex,
-				String adresse, String email, String numTelephone, String activiteProf,
+	public User(String username, String nom, String prenom, Date dateNaissance, String lieuNaissance,
+				String email, Sex sex, String numTelephone, String activiteProf,
 				Long numeroSecuriteSocial, String groupeSanguin, String password) {
 
+		this.username = username;
 		this.nom = nom;
 		this.prenom = prenom;
 		this.dateNaissance = dateNaissance;
 		this.lieuNaissance = lieuNaissance;
 		this.sex = sex;
-		this.adresse = adresse;
 		this.email = email;
 		this.numTelephone = numTelephone;
 		this.activiteProf = activiteProf;

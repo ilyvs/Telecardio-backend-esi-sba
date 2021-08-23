@@ -10,7 +10,7 @@ import javax.persistence.*;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "social_num", uniqueConstraints = { @UniqueConstraint(columnNames = "id"), @UniqueConstraint(columnNames = "sin") })
+@Table(name = "social_num", uniqueConstraints = { @UniqueConstraint(columnNames = "id"), @UniqueConstraint(columnNames = "numero_securite_social") })
 
 public class SocialNum {
 
@@ -18,7 +18,8 @@ public class SocialNum {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    private Long sin;
+    @Column(name = "numero_securite_social")
+    private Long numeroSecuriteSocial;
 
 
 }

@@ -63,16 +63,20 @@ public class AuthController {
 
 
 	@PostMapping("/signin")
-	public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest, User user)
+	public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest)
 			throws UnsupportedEncodingException, MessagingException {
+
+		System.out.println(loginRequest.getUsername() + loginRequest.getPassword());
 
 		Authentication authentication = authenticationManager.authenticate(
 				new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
 
-        //if (user.isEnabled()==true){
+		System.out.println(loginRequest.getUsername() + loginRequest.getPassword());
 
 		SecurityContextHolder.getContext().setAuthentication(authentication);
 		String jwt = jwtUtils.generateJwtToken(authentication);
+
+		System.out.println("jwt ++ " + jwt);
 
 		UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
 		List<String> roles = userDetails.getAuthorities().stream()
@@ -80,10 +84,19 @@ public class AuthController {
 				.collect(Collectors.toList());
 
 		return ResponseEntity.ok(new JwtResponse(jwt,
-												 userDetails.getId(),
-												 userDetails.getUsername(),
-												 userDetails.getEmail(),
-											     roles));
+				userDetails.getId(),
+				userDetails.getUsername(),
+				userDetails.getNom(),
+				userDetails.getPrenom(),
+				userDetails.getDateNaissance(),
+				userDetails.getLieuNaissance(),
+				userDetails.getEmail(),
+				userDetails.getSex(),
+				userDetails.getNumTelephone(),
+				userDetails.getActiviteProf(),
+				userDetails.getNumeroSecuriteSocial(),
+				userDetails.getGroupeSanguin(),
+				roles));
 
 	}
 
@@ -99,13 +112,13 @@ public class AuthController {
 					.badRequest()
 					.body(new MessageResponse("Error: Email is already in use!"));
 		}
-		if (userRepository.existsBySin(signUpRequest.getNumeroSecuriteSocial())){
+		if (userRepository.existsByNumeroSecuriteSocial(signUpRequest.getNumeroSecuriteSocial())){
 			return ResponseEntity
 					.badRequest()
-					.body((new MessageResponse("Error: Sin is already in use")));
+					.body((new MessageResponse("Error: Numero Securite Social is already in use")));
 		}
 
-		if (socialNumRepository.existsBySin(signUpRequest.getNumeroSecuriteSocial())) {
+		if (socialNumRepository.existsByNumeroSecuriteSocial(signUpRequest.getNumeroSecuriteSocial())) {
 
 		}else {
 			return ResponseEntity
@@ -115,13 +128,13 @@ public class AuthController {
 
 
 		// Create new user's account
-		User user = new User(signUpRequest.getNom(),
+		User user = new User(signUpRequest.getUsername(),
+				signUpRequest.getNom(),
 				signUpRequest.getPrenom(),
 				signUpRequest.getDateNaissance(),
 				signUpRequest.getLieuNaissance(),
 				signUpRequest.getEmail(),
 				signUpRequest.getSex(),
-				signUpRequest.getAdresse(),
 				signUpRequest.getNumTelephone(),
 				signUpRequest.getActiviteProf(),
 				signUpRequest.getNumeroSecuriteSocial(),
@@ -203,7 +216,6 @@ public class AuthController {
 			user.setDateNaissance(dateNaissance);
 			user.setLieuNaissance(lieuNaissance);
 			user.setEmail(email);
-			user.setAdresse(adresse);
 			user.setNumTelephone(numTelephone);
 			user.setPassword(password);
 

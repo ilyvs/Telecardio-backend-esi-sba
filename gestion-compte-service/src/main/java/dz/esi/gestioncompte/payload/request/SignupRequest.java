@@ -19,6 +19,11 @@ import java.util.Set;
 @NoArgsConstructor
 public class SignupRequest {
 
+
+    @NotBlank
+    @Size(min = 3, max = 20)
+    private String username;
+
     @NotBlank
     @Size(min = 3, max = 20)
     private String nom;
@@ -42,17 +47,11 @@ public class SignupRequest {
     @NotNull
     @Enumerated(EnumType.STRING)
     private Sex sex;
-
-    private String adresse;
-
-
     private String numTelephone;
-
     private String activiteProf;
 
     @NotNull
     private Long numeroSecuriteSocial;
-
     private String groupeSanguin;
 
     @NotBlank

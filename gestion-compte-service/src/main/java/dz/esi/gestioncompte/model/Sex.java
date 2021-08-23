@@ -2,6 +2,7 @@ package dz.esi.gestioncompte.model;
 
 
 public enum Sex {
+
     Homme('H'), FEMME('F');
 
     char name;
