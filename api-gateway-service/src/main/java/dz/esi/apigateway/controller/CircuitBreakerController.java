@@ -18,7 +18,7 @@ public class CircuitBreakerController {
         return " Dossier Medical Service Goes Down";
     }
 
-    
+
 
     @GetMapping("/examenCliniqueServiceDefaultResponse")
     public String examenCliniqueServiceFallBack() {

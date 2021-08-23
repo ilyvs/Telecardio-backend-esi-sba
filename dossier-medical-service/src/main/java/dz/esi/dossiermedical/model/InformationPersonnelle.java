@@ -25,24 +25,23 @@ public class InformationPersonnelle {
     private String prenom;
     private Date dateNaissance;
     private String lieuNaissance;
-    private String gendre;
     private String adresse;
+    private String sex;
     private String email;
     private String numTelephone;
     private String activiteProf;
-    private String numeroSecuriteSocial;
+    private Long numeroSecuriteSocial;
     private String groupeSanguin;
 
     public InformationPersonnelle(String nom, String prenom, Date dateNaissance,
-                                  String lieuNaissance, String gendre, String adresse,
-                                  String email, String numTelephone, String activiteProf,
-                                  String numeroSecuriteSocial, String groupeSanguin) {
+                                  String lieuNaissance, String sex, String email,
+                                  String numTelephone, String activiteProf,
+                                  Long numeroSecuriteSocial, String groupeSanguin) {
         this.nom = nom;
         this.prenom = prenom;
         this.dateNaissance = dateNaissance;
         this.lieuNaissance = lieuNaissance;
-        this.gendre = gendre;
-        this.adresse = adresse;
+        this.sex = sex;
         this.email = email;
         this.numTelephone = numTelephone;
         this.activiteProf = activiteProf;

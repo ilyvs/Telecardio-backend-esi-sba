@@ -17,7 +17,6 @@ public class DynamicInformationPersonnelle {
     private Date dateNaissance;
     private String lieuNaissance;
     private String sex;
-    private String adresse;
     private String email;
     private String numTelephone;
     private String activiteProf;

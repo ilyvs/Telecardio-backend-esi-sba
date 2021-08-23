@@ -48,14 +48,13 @@ public class DossierMedicalService {
                 dynamicInformationPersonnelle.getPrenom(),
                 dynamicInformationPersonnelle.getDateNaissance(),
                 dynamicInformationPersonnelle.getLieuNaissance(),
-                dynamicInformationPersonnelle.getGendre(),
-                dynamicInformationPersonnelle.getAdresse(),
+                dynamicInformationPersonnelle.getSex(),
                 dynamicInformationPersonnelle.getEmail(),
                 dynamicInformationPersonnelle.getNumTelephone(),
                 dynamicInformationPersonnelle.getActiviteProf(),
-                dynamicInformationPersonnelle.getGroupeSanguin(),
-                dynamicInformationPersonnelle.getNumeroSecuriteSocial()
-        );
+                dynamicInformationPersonnelle.getNumeroSecuriteSocial(),
+                dynamicInformationPersonnelle.getGroupeSanguin()
+                );
         informationPersonnelleRepo.save(informationPersonnelle);
 
         Data.getInformationBiometrique().setImc(Data.getInformationBiometrique().getPoids()/Math.sqrt(Data.getInformationBiometrique().getTaille()));
