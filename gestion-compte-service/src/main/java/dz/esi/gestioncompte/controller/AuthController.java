@@ -1,6 +1,7 @@
 package dz.esi.gestioncompte.controller;
 
 import dz.esi.gestioncompte.model.ERole;
+import dz.esi.gestioncompte.model.MsRequest;
 import dz.esi.gestioncompte.model.Role;
 import dz.esi.gestioncompte.model.User;
 import dz.esi.gestioncompte.payload.request.LoginRequest;
@@ -60,7 +61,10 @@ public class AuthController {
 	JwtUtils jwtUtils;
 
 
-
+	@PostMapping("/get-information-personnelle")
+	public User getInformationPersonnelle(@Valid @RequestBody MsRequest msRequest) {
+		return userRepository.findByNumeroSecuriteSocial(msRequest.getNumeroSecuriteSocial()).orElse(null);
+	}
 
 	@PostMapping("/signin")
 	public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest)
