@@ -37,6 +37,12 @@ public class DossierMedicalService {
     @Autowired
     PatientDossierRepository patientDossierRepo;
 
+
+
+
+
+
+
     public InformationPersonnelle getInformationPersonnelle(MsRequest msRequest) {
         DynamicInformationPersonnelle dynamicInformationPersonnelle = informationPersonnelleProxy.getInformationPersonnelle(msRequest);
 
@@ -54,43 +60,33 @@ public class DossierMedicalService {
         );
         informationPersonnelleRepo.save(informationPersonnelle);
 
+         PatientDossier patientDossier = new PatientDossier();
+         patientDossier.setInformationPersonnelle(informationPersonnelle);
+         patientDossier.setNumeroSecuriteSocial(dynamicInformationPersonnelle.getNumeroSecuriteSocial());
+         patientDossierRepo.save(patientDossier);
+
+
         return informationPersonnelle;
     }
 
 
 
+    public PatientDossier afficherDossierMedical(MsRequest msRequest) {
 
+        InformationPersonnelle informationPersonnelle = informationPersonnelleRepo.findByNumeroSecuriteSocial(msRequest.getNumeroSecuriteSocial()).orElse(null);
 
-    public ResponseEntity<?> ajouterDossierMedical(PatientDossier Data) {
+        if (informationPersonnelle == null){
+            getInformationPersonnelle(msRequest);
+        }
 
-        Data.getInformationPersonnelle().setId(Data.getInformationPersonnelle().getId());
-        informationPersonnelleRepo.save(Data.getInformationPersonnelle());
+        PatientDossier patientDossier = patientDossierRepo.findByNumeroSecuriteSocial(msRequest.getNumeroSecuriteSocial()).orElse(null);
 
-
-        Data.getInformationBiometrique().setImc(Data.getInformationBiometrique().getPoids()/Math.sqrt(Data.getInformationBiometrique().getTaille()));
-        biometriqueRepo.save(Data.getInformationBiometrique());
-
-        antecedentPersonnelleRepo.save(Data.getAntecedentPersonnelle());
-
-        signeCardiaqueRepo.save(Data.getSigneCardiaque());
-
-        antecedentMedicoCherigicauxRepo.save(Data.getAntecedentMedicoCherigicaux());
-
-        patientDossierRepo.save(Data);
-
-
-        return new ResponseEntity<>("Dossier médical ajouté avec succès", HttpStatus.OK);
+        return patientDossier;
     }
 
 
-    public InformationPersonnelle afficherDossierMedical(@PathVariable Long id) {
-        InformationPersonnelle infPer = informationPersonnelleRepo.findById(id).orElseThrow (null);
-        return infPer;
-    }
-
-    @ResponseBody
     public ResponseEntity<?> modifierDossierMedical(PatientDossier newData, Long id) {
-
+        
         if (patientDossierRepo.getById(id) != null) {
             newData.setId(id);
 

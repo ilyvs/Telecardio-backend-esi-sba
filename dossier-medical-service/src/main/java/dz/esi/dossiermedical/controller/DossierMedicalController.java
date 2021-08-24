@@ -19,21 +19,23 @@ public class DossierMedicalController {
 
 
 
+    /**
     @GetMapping("/get-information-personnelle")
     public InformationPersonnelle getInformationPersonnelle(@RequestBody MsRequest msRequest) {
         return dossierMedicalService.getInformationPersonnelle(msRequest);
     }
+    */
 
-
+    /**
     @PostMapping(value = "/ajouter-dossier-medical")
     public ResponseEntity<?> ajouterDossierMedical(@RequestBody final PatientDossier Data) {
         return dossierMedicalService.ajouterDossierMedical(Data);
     }
+    */
 
-
-    @GetMapping("/afficher-dossier-medical/{id}")
-    public InformationPersonnelle afficherDossierMedical(@PathVariable Long id) {
-        return dossierMedicalService.afficherDossierMedical(id);
+    @GetMapping("/afficher-dossier-medical")
+    public PatientDossier afficherDossierMedical(@RequestBody MsRequest msRequest) {
+        return dossierMedicalService.afficherDossierMedical(msRequest);
     }
 
     @PutMapping("/modifier-dossier-medical/{id}")

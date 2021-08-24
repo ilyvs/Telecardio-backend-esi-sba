@@ -18,6 +18,8 @@ public class PatientDossier {
     @Column(name = "idenpt")
     private Long id;
 
+    private Long numeroSecuriteSocial;
+
     @OneToOne(targetEntity = InformationPersonnelle.class,cascade = CascadeType.PERSIST)
     @JoinColumn(name = "infper_fk", referencedColumnName = "idenip")
     private InformationPersonnelle informationPersonnelle;
