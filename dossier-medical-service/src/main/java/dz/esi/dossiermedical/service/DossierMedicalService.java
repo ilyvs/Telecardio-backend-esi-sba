@@ -86,7 +86,7 @@ public class DossierMedicalService {
 
 
     public ResponseEntity<?> modifierDossierMedical(PatientDossier newData, Long id) {
-        
+
         if (patientDossierRepo.getById(id) != null) {
             newData.setId(id);
 
