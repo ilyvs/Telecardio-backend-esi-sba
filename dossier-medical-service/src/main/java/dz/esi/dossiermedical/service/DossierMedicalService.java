@@ -90,6 +90,8 @@ public class DossierMedicalService {
         if (patientDossierRepo.getById(id) != null) {
             newData.setId(id);
 
+            System.out.println("+++++" + newData.getNumeroSecuriteSocial());
+
             newData.getInformationPersonnelle().setId(newData.getInformationPersonnelle().getId());
             informationPersonnelleRepo.save(newData.getInformationPersonnelle());
 
