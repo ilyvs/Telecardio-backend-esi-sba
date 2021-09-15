@@ -26,7 +26,7 @@ public class AntecedentPersonnelle   {
 
     private int nbrBoitesChique;
 
-    private String alcool;
+    private Boolean alcool;
 
     private String medicaments;
 
