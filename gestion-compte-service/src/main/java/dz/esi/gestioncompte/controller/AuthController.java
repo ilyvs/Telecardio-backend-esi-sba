@@ -1,9 +1,6 @@
 package dz.esi.gestioncompte.controller;
 
-import dz.esi.gestioncompte.model.ERole;
-import dz.esi.gestioncompte.model.MsRequest;
-import dz.esi.gestioncompte.model.Role;
-import dz.esi.gestioncompte.model.User;
+import dz.esi.gestioncompte.model.*;
 import dz.esi.gestioncompte.payload.request.LoginRequest;
 import dz.esi.gestioncompte.payload.request.SignupRequest;
 import dz.esi.gestioncompte.payload.response.JwtResponse;
@@ -29,10 +26,7 @@ import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.io.UnsupportedEncodingException;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 
@@ -43,6 +37,10 @@ public class AuthController {
 
 	@Autowired
 	AuthenticationManager authenticationManager;
+
+	@Autowired
+	private UserRepository userRepo;
+
 
 	@Autowired
 	UserRepository userRepository;
@@ -65,6 +63,21 @@ public class AuthController {
 	@PostMapping("/get-information-personnelle")
 	public User getInformationPersonnelle(@Valid @RequestBody MsRequest msRequest) {
 		return userRepository.findByNumeroSecuriteSocial(msRequest.getNumeroSecuriteSocial()).orElse(null);
+	}
+
+	@PostMapping("/get-all-doctors")
+	public List<DoctorCHU> getAlldoc() {
+		Role doc = new Role();
+		doc.setName(ERole.ROLE_Medecin);
+		doc.setId(1L);
+		List<User> users = userRepo.getbyrole(doc);
+		List<DoctorCHU> docs = new ArrayList<>();
+		for(User user : users){
+			if(user.getRoles().toString().equals("[Role(id=1, name=ROLE_Medecin)]")){
+				docs.add( new DoctorCHU(user.getId(),user.getNom()));
+			}
+		}
+		return docs;
 	}
 
 	@PostMapping("/signin")
@@ -106,7 +119,7 @@ public class AuthController {
 	}
 
 
-
+	@CrossOrigin(origins = "*")
 	@PostMapping("/signup")
 	public ResponseEntity<MessageResponse> registerUser(@Valid @RequestBody SignupRequest signUpRequest, HttpServletRequest request)
 			throws UnsupportedEncodingException, MessagingException {

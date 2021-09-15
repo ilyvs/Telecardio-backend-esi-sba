@@ -1,10 +1,16 @@
 package dz.esi.gestioncompte.controller;
 
+import dz.esi.gestioncompte.model.ERole;
+import dz.esi.gestioncompte.model.Role;
+import dz.esi.gestioncompte.model.User;
+import dz.esi.gestioncompte.repository.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
@@ -16,7 +22,9 @@ public class TestController {
 	public String allAccess() {
 		return "Public Content.";
 	}
-	
+
+
+
 	@GetMapping("/user")
 	@PreAuthorize("hasRole('Patient') or hasRole('Medecin') or hasRole('Admin')")
 	public String userAccess() {
