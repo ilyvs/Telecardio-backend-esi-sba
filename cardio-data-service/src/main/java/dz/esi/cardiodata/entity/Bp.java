@@ -1,25 +1,41 @@
 package dz.esi.cardiodata.entity;
 
-import com.fasterxml.jackson.annotation.*;
 
-import javax.annotation.processing.Generated;
 import java.util.HashMap;
 import java.util.Map;
+import javax.annotation.Generated;
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
+import com.fasterxml.jackson.annotation.JsonAnySetter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
-"timestamp",
-"value"
+        "value",
+        "timestamp"
 })
 @Generated("jsonschema2pojo")
-public class Pb {
 
+public class Bp {
+
+    @JsonProperty("value")
+    private Value value;
     @JsonProperty("timestamp")
     private Double timestamp;
-    @JsonProperty("value")
-    private String value;
     @JsonIgnore
     private Map<String, Object> additionalProperties = new HashMap<String, Object>();
+
+    @JsonProperty("value")
+    public Value getValue() {
+        return value;
+    }
+
+    @JsonProperty("value")
+    public void setValue(Value value) {
+        this.value = value;
+    }
 
     @JsonProperty("timestamp")
     public Double getTimestamp() {
@@ -29,16 +45,6 @@ public class Pb {
     @JsonProperty("timestamp")
     public void setTimestamp(Double timestamp) {
         this.timestamp = timestamp;
-    }
-
-    @JsonProperty("value")
-    public String getValue() {
-        return value;
-    }
-
-    @JsonProperty("value")
-    public void setValue(String value) {
-        this.value = value;
     }
 
     @JsonAnyGetter
@@ -51,12 +57,12 @@ public class Pb {
         this.additionalProperties.put(name, value);
     }
 
+
     @Override
     public String toString() {
-        return "Pb{" +
+        return "Bp{" +
                 "timestamp=" + timestamp +
-                ", value='" + value + '\'' +
-                ", additionalProperties=" + additionalProperties +
+                ", value=" + value +
                 '}';
     }
 }

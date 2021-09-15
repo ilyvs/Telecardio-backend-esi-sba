@@ -1,7 +1,6 @@
 package dz.esi.cardiodata.entity;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import javax.annotation.Generated;
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
@@ -13,37 +12,50 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
-        "timestamp",
-        "value"
+        "systolic",
+        "diastolic",
+        "pulse"
 })
 @Generated("jsonschema2pojo")
-public class ECG {
+public class Value {
 
-    @JsonProperty("timestamp")
-    private Double timestamp;
-    @JsonProperty("value")
-    private List<Double> value;
+    @JsonProperty("systolic")
+    private Integer systolic;
+    @JsonProperty("diastolic")
+    private Integer diastolic;
+    @JsonProperty("pulse")
+    private Integer pulse;
     @JsonIgnore
     private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 
-    @JsonProperty("timestamp")
-    public Double getTimestamp() {
-        return timestamp;
+    @JsonProperty("systolic")
+    public Integer getSystolic() {
+        return systolic;
     }
 
-    @JsonProperty("timestamp")
-    public void setTimestamp(Double timestamp) {
-        this.timestamp = timestamp;
+    @JsonProperty("systolic")
+    public void setSystolic(Integer systolic) {
+        this.systolic = systolic;
     }
 
-    @JsonProperty("value")
-    public List<Double> getValue() {
-        return value;
+    @JsonProperty("diastolic")
+    public Integer getDiastolic() {
+        return diastolic;
     }
 
-    @JsonProperty("value")
-    public void setValue(List<Double> value) {
-        this.value = value;
+    @JsonProperty("diastolic")
+    public void setDiastolic(Integer diastolic) {
+        this.diastolic = diastolic;
+    }
+
+    @JsonProperty("pulse")
+    public Integer getPulse() {
+        return pulse;
+    }
+
+    @JsonProperty("pulse")
+    public void setPulse(Integer pulse) {
+        this.pulse = pulse;
     }
 
     @JsonAnyGetter
@@ -58,9 +70,11 @@ public class ECG {
 
     @Override
     public String toString() {
-        return "ECG{" +
-                "timestamp=" + timestamp +
-                ", value=" + value +
+        return '{' +
+                "systolic=" + systolic +
+                ", diastolic=" + diastolic +
+                ", pulse=" + pulse +
                 '}';
     }
+
 }

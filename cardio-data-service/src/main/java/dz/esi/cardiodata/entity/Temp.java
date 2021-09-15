@@ -53,10 +53,9 @@ public class Temp {
 
     @Override
     public String toString() {
-        return "Pb{" +
+        return "Temp{" +
                 "timestamp=" + timestamp +
-                ", value='" + value + '\'' +
-                ", additionalProperties=" + additionalProperties +
-                '}';
+                ", value=" + value  +
+                "}";
     }
 }
