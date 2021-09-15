@@ -42,6 +42,17 @@ spring:
                 fallbackuri: forward:/gestionCompteServiceDefaultResponse
           uri: lb://gestion-compte-service
 
+        - id: rdv-service
+          predicates:
+            - Path=/rdv-service/**
+          filters:
+            - RewritePath=/rdv-service/(?<s>.*), /${s}
+            - name: CircuitBreaker
+              args:
+                name: fallback-rdv-service
+                fallbackuri: forward:/rdvServiceDefaultResponse
+          uri: lb://rdv-service
+
 eureka:
   client:
     register-with-eureka: true

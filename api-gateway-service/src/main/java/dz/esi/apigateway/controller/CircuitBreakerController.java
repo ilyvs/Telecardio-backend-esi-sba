@@ -20,7 +20,6 @@ public class CircuitBreakerController {
     }
     */
 
-
     /**
     @GetMapping("/examenCliniqueServiceDefaultResponse")
     public String examenCliniqueServiceFallBack() {
@@ -44,4 +43,17 @@ public class CircuitBreakerController {
         return "Gestion Compte Service Goes Down";
     }
     */
+
+    /**
+     @GetMapping("/rdvServiceDefaultResponse")
+     public String rdvServiceFallBack() {
+     return "Rdv Service Goes Down";
+     }
+
+     @PostMapping("/rdvServiceDefaultResponse")
+     public String rdvServiceFallBackPost() {
+     return "Rdv Service Goes Down";
+     }
+     */
+
 }
