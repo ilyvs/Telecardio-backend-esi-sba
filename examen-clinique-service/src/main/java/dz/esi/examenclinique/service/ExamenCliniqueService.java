@@ -2,6 +2,7 @@ package dz.esi.examenclinique.service;
 
 import dz.esi.examenclinique.dao.*;
 import dz.esi.examenclinique.model.ExamenClinique;
+import dz.esi.examenclinique.proxy.MicroserviceCallBody;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -9,7 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 @Service
-public class ExamenMedicalService {
+public class ExamenCliniqueService {
 
 
     @Autowired
@@ -33,31 +34,19 @@ public class ExamenMedicalService {
     @Autowired
     private ThoraxRepository thoraxRepo;
 
-    @ResponseBody
-    public ResponseEntity<?> ajouterExamenMedical(ExamenClinique Data) {
 
-        poulsRepo.save(Data.getPouls());
-        signeVitauxRepo.save(Data.getSigneVitaux());
-        veineRepo.save(Data.getVeine());
-        poumonsRepo.save(Data.getPoumons());
-        abdominalRepo.save(Data.getAbdominal());
-        thoraxRepo.save(Data.getThorax());
 
-        examenCliniqueRepo.save(Data);
 
-        return new ResponseEntity<>("Examen clinique infos ajoutés avec succès", HttpStatus.OK);
+
+    public ExamenClinique afficherExamenMedical(MicroserviceCallBody microserviceCallBody) {
+
+        return examenCliniqueRepo.findByNumeroSecuriteSocial(microserviceCallBody.getNumeroSecuriteSocial()).orElse(null);
     }
 
 
-    public ExamenClinique afficherExamenMedical( Long id) {
-
-        return examenCliniqueRepo.findById(id).orElse(null);
-    }
-
-    @ResponseBody
     public ResponseEntity<?> modifierExamenMedical(ExamenClinique newData, Long id) {
 
-            if (examenCliniqueRepo.getById(id) != null) {
+        if (examenCliniqueRepo.getById(id) != null) {
             newData.setId(id);
 
             newData.getPouls().setId(newData.getPouls().getId());
@@ -69,21 +58,19 @@ public class ExamenMedicalService {
             newData.getVeine().setId(newData.getVeine().getId());
             veineRepo.save(newData.getVeine());
 
-                newData.getAbdominal().setId(newData.getAbdominal().getId());
-                abdominalRepo.save(newData.getAbdominal());
+            newData.getAbdominal().setId(newData.getAbdominal().getId());
+            abdominalRepo.save(newData.getAbdominal());
 
-                newData.getPoumons().setId(newData.getPoumons().getId());
-                poumonsRepo.save(newData.getPoumons());
+            newData.getPoumons().setId(newData.getPoumons().getId());
+            poumonsRepo.save(newData.getPoumons());
 
-                newData.getThorax().setId(newData.getThorax().getId());
-                thoraxRepo.save(newData.getThorax());
+            newData.getThorax().setId(newData.getThorax().getId());
+            thoraxRepo.save(newData.getThorax());
 
             examenCliniqueRepo.save(newData);
-
         }
         return new ResponseEntity<>("Examen clinique infos  modifiés avec succès", HttpStatus.OK);
     }
-
 
 
 }

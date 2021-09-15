@@ -17,6 +17,8 @@ public class ExamenClinique {
     @Column(name = "idened")
     private Long id;
 
+    private Long numeroSecuriteSocial;
+
     @OneToOne(targetEntity = Pouls.class,cascade = CascadeType.PERSIST)
     @JoinColumn(name = "pouls_fk", referencedColumnName = "idenpl")
     private Pouls pouls;

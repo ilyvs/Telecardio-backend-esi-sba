@@ -1,7 +1,8 @@
 package dz.esi.examenclinique.controller;
 
 import dz.esi.examenclinique.model.ExamenClinique;
-import dz.esi.examenclinique.service.ExamenMedicalService;
+import dz.esi.examenclinique.proxy.MicroserviceCallBody;
+import dz.esi.examenclinique.service.ExamenCliniqueService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,21 +16,16 @@ import org.springframework.web.bind.annotation.*;
 @CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("")
-public class ExamenMedicalController {
+public class ExamenCliniqueController {
 
-    Logger logger = LoggerFactory.getLogger(ExamenMedicalController.class);
 
     @Autowired
-    private ExamenMedicalService examenMedicalService;
+    private ExamenCliniqueService examenMedicalService;
 
-    @PostMapping(value = "/ajouter-examen-medical", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> ajouterExamenMedical(@RequestBody final ExamenClinique Data) {
-        return examenMedicalService.ajouterExamenMedical(Data);
-    }
 
-    @GetMapping("/afficher-examen-medical/{id}")
-    public ExamenClinique afficherExamenMedical(@PathVariable Long id) {
-        return examenMedicalService.afficherExamenMedical(id);
+    @GetMapping("/afficher-examen-medical")
+    public ExamenClinique afficherExamenMedical(@RequestBody MicroserviceCallBody microserviceCallBody) {
+        return examenMedicalService.afficherExamenMedical(microserviceCallBody);
     }
 
     @PutMapping("/modifier-examen-medical/{id}")
