@@ -9,7 +9,7 @@ import javax.validation.constraints.NotBlank;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class MsRequest {
+public class MicroserviceCallBody {
 
     private Long numeroSecuriteSocial;
 

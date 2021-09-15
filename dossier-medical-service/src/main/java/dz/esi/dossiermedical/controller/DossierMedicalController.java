@@ -1,8 +1,7 @@
 package dz.esi.dossiermedical.controller;
 
-import dz.esi.dossiermedical.model.InformationPersonnelle;
 import dz.esi.dossiermedical.model.PatientDossier;
-import dz.esi.dossiermedical.proxy.MsRequest;
+import dz.esi.dossiermedical.proxy.MicroserviceCallBody;
 import dz.esi.dossiermedical.service.DossierMedicalService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -19,23 +18,9 @@ public class DossierMedicalController {
 
 
 
-    /**
-    @GetMapping("/get-information-personnelle")
-    public InformationPersonnelle getInformationPersonnelle(@RequestBody MsRequest msRequest) {
-        return dossierMedicalService.getInformationPersonnelle(msRequest);
-    }
-    */
-
-    /**
-    @PostMapping(value = "/ajouter-dossier-medical")
-    public ResponseEntity<?> ajouterDossierMedical(@RequestBody final PatientDossier Data) {
-        return dossierMedicalService.ajouterDossierMedical(Data);
-    }
-    */
-
     @GetMapping("/afficher-dossier-medical")
-    public PatientDossier afficherDossierMedical(@RequestBody MsRequest msRequest) {
-        return dossierMedicalService.afficherDossierMedical(msRequest);
+    public PatientDossier afficherDossierMedical(@RequestBody MicroserviceCallBody microserviceCallBody) {
+        return dossierMedicalService.afficherDossierMedical(microserviceCallBody);
     }
 
     @PutMapping("/modifier-dossier-medical/{id}")

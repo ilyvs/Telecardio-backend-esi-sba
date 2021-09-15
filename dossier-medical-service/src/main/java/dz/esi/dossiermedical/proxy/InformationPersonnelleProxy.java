@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 public interface InformationPersonnelleProxy {
 
     @PostMapping("/api/auth/get-information-personnelle")
-    DynamicInformationPersonnelle getInformationPersonnelle(@RequestBody MsRequest msRequest);
+    DynamicInformationPersonnelle getInformationPersonnelle(@RequestBody MicroserviceCallBody microserviceCallBody);
 
 
 }

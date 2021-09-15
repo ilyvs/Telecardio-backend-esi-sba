@@ -5,13 +5,11 @@ import dz.esi.dossiermedical.dao.*;
 import dz.esi.dossiermedical.model.InformationPersonnelle;
 import dz.esi.dossiermedical.model.PatientDossier;
 import dz.esi.dossiermedical.proxy.InformationPersonnelleProxy;
-import dz.esi.dossiermedical.proxy.MsRequest;
+import dz.esi.dossiermedical.proxy.MicroserviceCallBody;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 @Service
 public class DossierMedicalService {
@@ -43,8 +41,8 @@ public class DossierMedicalService {
 
 
 
-    public InformationPersonnelle getInformationPersonnelle(MsRequest msRequest) {
-        DynamicInformationPersonnelle dynamicInformationPersonnelle = informationPersonnelleProxy.getInformationPersonnelle(msRequest);
+    public InformationPersonnelle getInformationPersonnelle(MicroserviceCallBody microserviceCallBody) {
+        DynamicInformationPersonnelle dynamicInformationPersonnelle = informationPersonnelleProxy.getInformationPersonnelle(microserviceCallBody);
 
         InformationPersonnelle informationPersonnelle = new InformationPersonnelle(
                 dynamicInformationPersonnelle.getNom(),
@@ -71,15 +69,15 @@ public class DossierMedicalService {
 
 
 
-    public PatientDossier afficherDossierMedical(MsRequest msRequest) {
+    public PatientDossier afficherDossierMedical(MicroserviceCallBody microserviceCallBody) {
 
-        InformationPersonnelle informationPersonnelle = informationPersonnelleRepo.findByNumeroSecuriteSocial(msRequest.getNumeroSecuriteSocial()).orElse(null);
+        InformationPersonnelle informationPersonnelle = informationPersonnelleRepo.findByNumeroSecuriteSocial(microserviceCallBody.getNumeroSecuriteSocial()).orElse(null);
 
         if (informationPersonnelle == null){
-            getInformationPersonnelle(msRequest);
+            getInformationPersonnelle(microserviceCallBody);
         }
 
-        PatientDossier patientDossier = patientDossierRepo.findByNumeroSecuriteSocial(msRequest.getNumeroSecuriteSocial()).orElse(null);
+        PatientDossier patientDossier = patientDossierRepo.findByNumeroSecuriteSocial(microserviceCallBody.getNumeroSecuriteSocial()).orElse(null);
 
         return patientDossier;
     }
@@ -89,8 +87,6 @@ public class DossierMedicalService {
 
         if (patientDossierRepo.getById(id) != null) {
             newData.setId(id);
-
-            System.out.println("+++++" + newData.getNumeroSecuriteSocial());
 
             newData.getInformationPersonnelle().setId(newData.getInformationPersonnelle().getId());
             informationPersonnelleRepo.save(newData.getInformationPersonnelle());
