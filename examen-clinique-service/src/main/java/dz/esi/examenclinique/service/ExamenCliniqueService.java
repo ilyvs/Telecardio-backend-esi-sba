@@ -1,13 +1,16 @@
 package dz.esi.examenclinique.service;
 
+import dz.esi.examenclinique.DTO.Nss;
 import dz.esi.examenclinique.dao.*;
 import dz.esi.examenclinique.model.ExamenClinique;
 import dz.esi.examenclinique.proxy.MicroserviceCallBody;
+import dz.esi.examenclinique.proxy.NssProxy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.ResponseBody;
+
+import java.util.List;
 
 @Service
 public class ExamenCliniqueService {
@@ -34,12 +37,23 @@ public class ExamenCliniqueService {
     @Autowired
     private ThoraxRepository thoraxRepo;
 
+    @Autowired
+    private NssProxy nssProxy;
 
+    @Autowired
+    private NssRepository nssRepo;
 
-
+    public void checkNssTable(){
+        if (nssRepo.findAll()==null) {
+            List<Nss> nssList = nssProxy.getAllNss();
+            for (Nss nss : nssList)
+                nssRepo.save(nss);
+        }
+    }
 
     public ExamenClinique afficherExamenMedical(MicroserviceCallBody microserviceCallBody) {
 
+        checkNssTable();
 
         ExamenClinique examenClinique =  examenCliniqueRepo.findByNumeroSecuriteSocial(microserviceCallBody.getNumeroSecuriteSocial()).orElse(null);
         if (examenClinique == null) {
