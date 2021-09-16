@@ -25,9 +25,22 @@ public class RdvController {
 
     /** TODO : Patient Methods */
 
-    @PostMapping("/creat-appointment")
+    @PostMapping("/get-all-doctors")
     public List<DoctorCHU> getAllDoctors() {
         return rdvService.getAllDoctors();
+    }
+
+
+    @PostMapping("/add-appointment")
+    public boolean addAppointment(@RequestBody Appointment newAppointment) {
+        List<Appointment> allAppointments = appointmentRepo.findAll();
+        for ( Appointment appointment : allAppointments) {
+            if (appointment.getDate().compareTo(newAppointment.getDate()) == 0 ){
+                return false;
+            }
+        }
+        appointmentRepo.save(newAppointment);
+        return true;
     }
 
 
@@ -37,14 +50,14 @@ public class RdvController {
         return appointmentRepo.findById(newAppointment.getAppointment_id())
                 .map(Appointment -> {
                     Appointment.setAppointment_id(newAppointment.getAppointment_id());
-                    Appointment.setTime(newAppointment.getTime());
+                    Appointment.setDate(newAppointment.getDate());
                     Appointment.setNotes(newAppointment.getNotes());
+                    Appointment.setId_doc(newAppointment.getId_doc());
                     Appointment.setDoc_name(newAppointment.getDoc_name());
                     Appointment.setPatient_id(newAppointment.getPatient_id());
                     Appointment.setCas(newAppointment.getCas());
                     return appointmentRepo.save(Appointment);
                 })
-
                 .orElseGet(() -> {
                     newAppointment.setAppointment_id(newAppointment.getAppointment_id());
                     return appointmentRepo.save(newAppointment);

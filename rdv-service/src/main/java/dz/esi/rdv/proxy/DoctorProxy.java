@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import java.util.List;
 
 @FeignClient(name="gestion-compte-service",url = "http://localhost:8083")
-//@LoadBalancerClient(name="gestion-compte-service")
+@LoadBalancerClient(name="gestion-compte-service")
 public interface DoctorProxy {
 
     @PostMapping("/api/auth/get-all-doctors")

@@ -16,12 +16,11 @@ import java.util.Date;
 @Entity
 public class Appointment  {
 
-	sout
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long appointment_id;
 	private Date date;
-	private String time;
 	private String notes;
 	private Long id_doc;
 	private String doc_name;
@@ -39,12 +38,6 @@ public class Appointment  {
 	}
 	public void setDate(Date date) {
 		this.date = date;
-	}
-	public String getTime() {
-		return time;
-	}
-	public void setTime(String time) {
-		this.time = time;
 	}
 	public String getCas() { return cas; }
 	public String getNotes() {
