@@ -1,4 +1,4 @@
-package dz.esi.gestioncompte.model;
+package dz.esi.gestioncompte.DTO;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

@@ -1,5 +1,7 @@
 package dz.esi.gestioncompte.controller;
 
+import dz.esi.gestioncompte.DTO.DoctorCHU;
+import dz.esi.gestioncompte.DTO.MicroserviceCallBody;
 import dz.esi.gestioncompte.model.*;
 import dz.esi.gestioncompte.payload.request.LoginRequest;
 import dz.esi.gestioncompte.payload.request.SignupRequest;
@@ -61,8 +63,8 @@ public class AuthController {
 
 
 	@PostMapping("/get-information-personnelle")
-	public User getInformationPersonnelle(@Valid @RequestBody MsRequest msRequest) {
-		return userRepository.findByNumeroSecuriteSocial(msRequest.getNumeroSecuriteSocial()).orElse(null);
+	public User getInformationPersonnelle(@Valid @RequestBody MicroserviceCallBody microserviceCallBody) {
+		return userRepository.findByNumeroSecuriteSocial(microserviceCallBody.getNumeroSecuriteSocial()).orElse(null);
 	}
 
 	@PostMapping("/get-all-doctors")
@@ -79,6 +81,12 @@ public class AuthController {
 		}
 		return docs;
 	}
+
+	@PostMapping("/get-all-nss")
+	public List<SocialNum> getAllNSS() {
+		return socialNumRepository.findAll();
+	}
+
 
 	@PostMapping("/signin")
 	public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest)
