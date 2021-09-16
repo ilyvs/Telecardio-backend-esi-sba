@@ -62,6 +62,11 @@ public class AuthController {
 	JwtUtils jwtUtils;
 
 
+	@GetMapping("/users")
+	public List<User> getUsers(){
+		return userRepository.findAll();
+	}
+
 	@PostMapping("/get-information-personnelle")
 	public User getInformationPersonnelle(@Valid @RequestBody MicroserviceCallBody microserviceCallBody) {
 		return userRepository.findByNumeroSecuriteSocial(microserviceCallBody.getNumeroSecuriteSocial()).orElse(null);
