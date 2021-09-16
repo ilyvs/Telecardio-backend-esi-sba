@@ -35,7 +35,7 @@ public class RdvController {
     public boolean addAppointment(@RequestBody Appointment newAppointment) {
         List<Appointment> allAppointments = appointmentRepo.findAll();
         for ( Appointment appointment : allAppointments) {
-            if (appointment.getDate().compareTo(newAppointment.getDate()) == 0 ){
+            if (( appointment.getDate().compareTo(newAppointment.getDate()) == 0 ) && appointment.getCas().equals("approved")){
                 return false;
             }
         }
