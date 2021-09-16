@@ -40,7 +40,14 @@ public class ExamenCliniqueService {
 
     public ExamenClinique afficherExamenMedical(MicroserviceCallBody microserviceCallBody) {
 
-        return examenCliniqueRepo.findByNumeroSecuriteSocial(microserviceCallBody.getNumeroSecuriteSocial()).orElse(null);
+
+        ExamenClinique examenClinique =  examenCliniqueRepo.findByNumeroSecuriteSocial(microserviceCallBody.getNumeroSecuriteSocial()).orElse(null);
+        if (examenClinique == null) {
+            examenClinique = new ExamenClinique();
+            examenClinique.setNumeroSecuriteSocial(microserviceCallBody.getNumeroSecuriteSocial());
+            examenCliniqueRepo.save(examenClinique);
+        }
+        return examenClinique;
     }
 
 

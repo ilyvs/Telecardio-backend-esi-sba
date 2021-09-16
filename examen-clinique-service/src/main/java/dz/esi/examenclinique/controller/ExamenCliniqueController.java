@@ -24,13 +24,14 @@ public class ExamenCliniqueController {
 
 
     @GetMapping("/afficher-examen-medical")
-    public ExamenClinique afficherExamenMedical(@RequestBody MicroserviceCallBody microserviceCallBody) {
+    public ExamenClinique afficherExamenMedical(@RequestParam (name="numeroSecuriteSocial") String nss) {
+        MicroserviceCallBody microserviceCallBody = new MicroserviceCallBody(Long.valueOf(nss));
         return examenMedicalService.afficherExamenMedical(microserviceCallBody);
     }
 
     @PutMapping("/modifier-examen-medical/{id}")
     public ResponseEntity<?> modifierExamenMedical(@RequestBody final ExamenClinique newData,
-                                                    @PathVariable Long id ) {
+                                                   @PathVariable Long id ) {
         return examenMedicalService.modifierExamenMedical(newData, id);
     }
 
