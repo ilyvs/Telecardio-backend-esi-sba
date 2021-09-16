@@ -19,7 +19,8 @@ public class DossierMedicalController {
 
 
     @GetMapping("/afficher-dossier-medical")
-    public PatientDossier afficherDossierMedical(@RequestBody MicroserviceCallBody microserviceCallBody) {
+    public PatientDossier afficherDossierMedical(@RequestParam (name="numeroSecuriteSocial") String nss) {
+        MicroserviceCallBody microserviceCallBody = new MicroserviceCallBody(Long.valueOf(nss));
         return dossierMedicalService.afficherDossierMedical(microserviceCallBody);
     }
 
