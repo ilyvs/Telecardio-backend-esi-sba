@@ -87,22 +87,17 @@ public class AuthController {
 		return socialNumRepository.findAll();
 	}
 
-
 	@PostMapping("/signin")
 	public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest)
 			throws UnsupportedEncodingException, MessagingException {
 
-		System.out.println(loginRequest.getUsername() + loginRequest.getPassword());
-
 		Authentication authentication = authenticationManager.authenticate(
 				new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
 
-		System.out.println(loginRequest.getUsername() + loginRequest.getPassword());
 
 		SecurityContextHolder.getContext().setAuthentication(authentication);
 		String jwt = jwtUtils.generateJwtToken(authentication);
 
-		System.out.println("jwt ++ " + jwt);
 
 		UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
 		List<String> roles = userDetails.getAuthorities().stream()
