@@ -43,17 +43,17 @@ public class ExamenCliniqueService {
     @Autowired
     private NssRepository nssRepo;
 
-    /* public void checkNssTable(){
+    public void checkNssTable(){
         if (nssRepo.findAll()==null) {
             List<Nss> nssList = nssProxy.getAllNss();
             for (Nss nss : nssList)
                 nssRepo.save(nss);
         }
-    } */
+    }
 
     public ExamenClinique afficherExamenMedical(MicroserviceCallBody microserviceCallBody) {
 
-        // checkNssTable();
+        //checkNssTable();
 
         ExamenClinique examenClinique =  examenCliniqueRepo.findByNumeroSecuriteSocial(microserviceCallBody.getNumeroSecuriteSocial()).orElse(null);
         if (examenClinique == null) {

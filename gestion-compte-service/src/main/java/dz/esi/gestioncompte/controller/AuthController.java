@@ -2,6 +2,7 @@ package dz.esi.gestioncompte.controller;
 
 import dz.esi.gestioncompte.DTO.DoctorCHU;
 import dz.esi.gestioncompte.DTO.MicroserviceCallBody;
+import dz.esi.gestioncompte.DTO.PatientMail;
 import dz.esi.gestioncompte.model.*;
 import dz.esi.gestioncompte.payload.request.LoginRequest;
 import dz.esi.gestioncompte.payload.request.SignupRequest;
@@ -91,6 +92,18 @@ public class AuthController {
 	public List<SocialNum> getAllNSS() {
 		return socialNumRepository.findAll();
 	}
+
+	@PostMapping("/get-patient-email")
+	public PatientMail getPatientMail(@RequestParam("id") Long idPatient) {
+
+		User user =  userRepository.findById(idPatient).orElse(null);
+		PatientMail patientMail = new PatientMail();
+		patientMail.setId(idPatient);
+		patientMail.setEmail(user.getEmail());
+
+		return patientMail;
+	}
+
 
 	@PostMapping("/signin")
 	public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest)
