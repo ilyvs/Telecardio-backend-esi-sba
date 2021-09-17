@@ -27,6 +27,10 @@ public class Appointment  {
 	private Long patient_id;
 	private String cas;
 
+
+	private String verificationCode;
+	private boolean enabled;
+
 	public Long getAppointment_id() {
 		return appointment_id;
 	}
