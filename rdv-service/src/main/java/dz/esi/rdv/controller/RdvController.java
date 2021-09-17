@@ -1,13 +1,21 @@
 package dz.esi.rdv.controller;
 
 import dz.esi.rdv.DTO.DoctorCHU;
+import dz.esi.rdv.DTO.PatientMail;
 import dz.esi.rdv.model.Appointment;
+import dz.esi.rdv.proxy.EmailProxy;
 import dz.esi.rdv.repository.AppointmentRepository;
 import dz.esi.rdv.service.RdvService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.web.bind.annotation.*;
 
+import javax.mail.MessagingException;
+import javax.mail.internet.MimeMessage;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @CrossOrigin(origins = "*")
@@ -22,6 +30,11 @@ public class RdvController {
     @Autowired
     private AppointmentRepository appointmentRepo;
 
+    @Autowired
+    private JavaMailSender mailSender;
+
+    @Autowired
+    private EmailProxy emailProxy;
 
     /** TODO : Patient Methods */
 
@@ -35,7 +48,9 @@ public class RdvController {
     public boolean addAppointment(@RequestBody Appointment newAppointment) {
         List<Appointment> allAppointments = appointmentRepo.findAll();
         for ( Appointment appointment : allAppointments) {
-            if (( appointment.getDate().compareTo(newAppointment.getDate()) == 0 ) && appointment.getCas().equals("approved")){
+            if (( appointment.getDate().compareTo(newAppointment.getDate()) == 0 )
+                    && appointment.getCas().equals("approved")
+                    && newAppointment.getDate().compareTo(new Date()) < 0){
                 return false;
             }
         }
@@ -64,7 +79,6 @@ public class RdvController {
                 });
     }
 
-
     @GetMapping("/consult-my-appointments/{id}")
     public List<Appointment> consultMyAppointments(@PathVariable Long id) {
         List<Appointment> myAppointments = new ArrayList<>();
@@ -87,12 +101,40 @@ public class RdvController {
         return newAppointments;
     }
 
+
+    private void sendVerificationEmail(String mail)
+            throws MessagingException, UnsupportedEncodingException {
+        String toAddress = mail;
+        String fromAddress = "chusba022@gmail.com\n";
+        String senderName = "CHU Hassani Abdelkader\n";
+        String subject = "Your Appointment State";
+        String content = "Dear Mouh,<br>"
+                + "Thank you,<br>"
+                + "CHU SBA.";
+
+        MimeMessage message = mailSender.createMimeMessage();
+        MimeMessageHelper helper = new MimeMessageHelper(message);
+
+        helper.setFrom(fromAddress, senderName);
+        helper.setTo(toAddress);
+        helper.setSubject(subject);
+
+        helper.setText(content, true);
+        mailSender.send(message);
+
+    }
+
+
     @PutMapping("/approve-rdv/{id}")
-    public void  approverdv( @PathVariable Long id) {
+    public void  approverdv( @PathVariable Long id) throws MessagingException, UnsupportedEncodingException {
         Appointment appointment = appointmentRepo.findById(id).orElse(null);
         appointment.setCas("approved");
         appointment.setAppointment_id(id);
         appointmentRepo.save(appointment);
+        System.out.println("qsljdqsjkdqsd");
+        PatientMail patientMail = emailProxy.getPatientMail(appointment.getPatient_id());
+        System.out.println("sdsds"+patientMail.getEmail());
+        sendVerificationEmail(patientMail.getEmail());
     }
 
     @PutMapping("/refuse-rdv/{id}")
@@ -108,6 +150,36 @@ public class RdvController {
             if(appointment.getCas().equals("approved"))
                 acceptedAppointments.add(appointment);
         return acceptedAppointments;
+    }
+
+
+
+
+
+
+
+    /** TODO : Nurse Methods */
+
+    @GetMapping("/consult-doctor-approved-appointments")
+    public List<Appointment> consultDocApprovedAppointments(@RequestParam("doctorName") String doctorName) {
+        List<Appointment> doctorAppointments = new ArrayList<>();
+        List<Appointment> allAppointments = appointmentRepo.findAll();
+        for ( Appointment appointment : allAppointments)
+            if (appointment.getDoc_name().equals(doctorName))
+                if(appointment.getCas().equals("approved"))
+                    doctorAppointments.add(appointment);
+        return doctorAppointments;
+    }
+
+    @GetMapping("/consult-doctor-new-appointments")
+    public List<Appointment> consultDocNewAppointments(@RequestParam("doctorName") String doctorName) {
+        List<Appointment> doctorAppointments = new ArrayList<>();
+        List<Appointment> allAppointments = appointmentRepo.findAll();
+        for ( Appointment appointment : allAppointments)
+            if (appointment.getDoc_name().equals(doctorName))
+                if(appointment.getCas().equals(""))
+                    doctorAppointments.add(appointment);
+        return doctorAppointments;
     }
 
 }
