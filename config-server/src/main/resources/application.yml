@@ -8,7 +8,7 @@ spring:
     config:
       server:
         git:
-          uri: ${HOME}/Recent/Microservices/Microservices-config-server
+          uri: https://github.com/ilyvmi/Microservices-config-server
           default-label: main
           clone-on-start: true
 
@@ -17,3 +17,4 @@ management:
     web:
       exposure:
         include: "*"
+

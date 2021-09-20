@@ -15,6 +15,7 @@ public class ECGMappedDB {
     @Column
     Double value;
 
-    @Column(timestamp = true)
-    Instant time;
+    @Column
+    Long valueSaveTime;
+
 }

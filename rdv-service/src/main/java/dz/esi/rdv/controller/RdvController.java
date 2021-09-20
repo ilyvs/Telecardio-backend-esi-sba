@@ -38,12 +38,12 @@ public class RdvController {
 
     /** TODO : Patient Methods */
 
-    @PostMapping("/get-all-doctors")
+    @GetMapping("/get-all-doctors")
     public List<DoctorCHU> getAllDoctors() {
         return rdvService.getAllDoctors();
     }
 
-
+/*
     @PostMapping("/add-appointment")
     public boolean addAppointment(@RequestBody Appointment newAppointment) {
         List<Appointment> allAppointments = appointmentRepo.findAll();
@@ -56,6 +56,24 @@ public class RdvController {
         }
         appointmentRepo.save(newAppointment);
         return true;
+    }*/
+
+    @PostMapping("/add-appointment")
+    public int addAppointment(@RequestBody Appointment newAppointment) {
+        List<Appointment> allAppointments = appointmentRepo.findAll();
+        Date currentdate = new Date();
+        for ( Appointment appointment : allAppointments) {
+            if (( appointment.getDate().compareTo(newAppointment.getDate()) == 0 ) && appointment.getCas().equals("approved")){
+                return 1;
+            }
+        }
+        if (newAppointment.getDate().compareTo(currentdate) < 0) { return 2;  }{
+
+
+            appointmentRepo.save(newAppointment);
+            return 3;
+
+        }
     }
 
 
@@ -102,13 +120,13 @@ public class RdvController {
     }
 
 
-    private void sendVerificationEmail(String mail)
+    private void sendapproveEmail(String mail )
             throws MessagingException, UnsupportedEncodingException {
         String toAddress = mail;
         String fromAddress = "chusba022@gmail.com\n";
-        String senderName = "CHU Hassani Abdelkader\n";
-        String subject = "Your Appointment State";
-        String content = "Dear Mouh,<br>"
+        String senderName = "CHU tele cardio <\n";
+        String subject = "Your Appointment is approved ";
+        String content = "Dear patient,<br>"
                 + "Thank you,<br>"
                 + "CHU SBA.";
 
@@ -125,6 +143,30 @@ public class RdvController {
     }
 
 
+    private void sendrefusedEmail(String mail)
+            throws MessagingException, UnsupportedEncodingException {
+        String toAddress = mail;
+        String fromAddress = "chusba022@gmail.com\n";
+        String senderName = "CHU tele cardio <\n";
+        String subject = "Your Appointment is approved ";
+        String content = "Dear patient,<br>"
+                + "we are sorry to informe you that your appointment has been refused due to the doctors wishes ,<br>"
+                + "please add another appointment in a different time " +
+                 "or select another doctor "
+                + "CHU SBA.";
+
+        MimeMessage message = mailSender.createMimeMessage();
+        MimeMessageHelper helper = new MimeMessageHelper(message);
+
+        helper.setFrom(fromAddress, senderName);
+        helper.setTo(toAddress);
+        helper.setSubject(subject);
+
+        helper.setText(content, true);
+        mailSender.send(message);
+
+    }
+
     @PutMapping("/approve-rdv/{id}")
     public void  approverdv( @PathVariable Long id) throws MessagingException, UnsupportedEncodingException {
         Appointment appointment = appointmentRepo.findById(id).orElse(null);
@@ -134,12 +176,17 @@ public class RdvController {
         System.out.println("qsljdqsjkdqsd");
         PatientMail patientMail = emailProxy.getPatientMail(appointment.getPatient_id());
         System.out.println("sdsds"+patientMail.getEmail());
-        sendVerificationEmail(patientMail.getEmail());
+        sendapproveEmail(patientMail.getEmail());
     }
 
     @PutMapping("/refuse-rdv/{id}")
-    public void resfuserdv( @PathVariable Long id) {
-        appointmentRepo.delete(appointmentRepo.findById(id).orElse(null));
+    public void resfuserdv( @PathVariable Long id) throws MessagingException, UnsupportedEncodingException {
+        Appointment appointment = appointmentRepo.findById(id).orElse(null);
+        PatientMail patientMail = emailProxy.getPatientMail(appointment.getPatient_id());
+        sendrefusedEmail(patientMail.getEmail());
+        appointmentRepo.delete(appointment);
+
+
     }
 
     @GetMapping("/get-approved-appointment/{id}")
