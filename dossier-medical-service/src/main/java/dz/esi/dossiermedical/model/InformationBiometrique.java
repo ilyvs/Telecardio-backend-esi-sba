@@ -23,9 +23,9 @@ public class InformationBiometrique {
     private Double poids;
 
     private Double imc;
-
+/*
     @Transient
-    private InformationPersonnelle informationPersonnelle;
+    private InformationPersonnelle informationPersonnelle;*/
 }
 
 

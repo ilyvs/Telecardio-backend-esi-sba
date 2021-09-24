@@ -30,6 +30,6 @@ public class AntecedentPersonnelle   {
 
     private String medicaments;
 
-    @Transient
-    private InformationPersonnelle informationPersonnelle;
+    /*@Transient
+    private InformationPersonnelle informationPersonnelle;*/
 }

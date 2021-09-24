@@ -32,7 +32,7 @@ public class SigneCardiaque {
     private boolean evanouissement;
 
     private boolean syncopeOedemes;
-
+/*
     @Transient
-    private InformationPersonnelle informationPersonnelle;
+    private InformationPersonnelle informationPersonnelle;*/
 }

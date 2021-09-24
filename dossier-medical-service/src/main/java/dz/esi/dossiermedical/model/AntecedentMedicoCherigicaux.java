@@ -30,6 +30,6 @@ public class AntecedentMedicoCherigicaux  {
 
     private String toxiques;
 
-    @Transient
-    private InformationPersonnelle informationPersonnelle;
+    /*@Transient
+    private InformationPersonnelle informationPersonnelle;*/
 }
